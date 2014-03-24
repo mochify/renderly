@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 
 using ManyConsole;
+using Common.Logging;
 using Mochify.Simile.Core;
 using Mochify.Simile.Core.Models.Csv;
 using Mochify.Simile.Core.Utils;
@@ -12,6 +13,7 @@ namespace Renderly.Commands
 {
     public class DeleteTestCaseCommand : ConsoleCommand
     {
+        private static readonly ILog _log = LogManager.GetCurrentClassLogger();
         private string ModelFile { get; set; }
         private string OutputFile { get; set; }
         private IEnumerable<DateTime> Dates { get; set; }
@@ -53,30 +55,32 @@ namespace Renderly.Commands
             {
                 if (!Dates.Any() && !Releases.Any() && !TestIds.Any())
                 {
-                    Console.WriteLine("Nothing to do, please specify at least one of dates|releases|test ids");
+                    _log.Info("Nothing to do, please specify at least one of dates|releases|test ids");
                 }
-
-                var predicate = PredicateBuilder.False<TestCase>();
-
-                foreach (var d in Dates)
+                else
                 {
-                    predicate = predicate.Or(x => x.DateAdded.Date == d.Date);
+                    var predicate = PredicateBuilder.False<TestCase>();
+
+                    foreach (var d in Dates)
+                    {
+                        predicate = predicate.Or(x => x.DateAdded.Date == d.Date);
+                    }
+
+                    foreach (var s in Releases)
+                    {
+                        predicate = predicate.Or(x => x.Release == s);
+                    }
+
+                    foreach (var t in TestIds)
+                    {
+
+                        predicate = predicate.Or(x => x.TestId == t);
+                    }
+
+                    var deleted = model.Delete(predicate.Compile());
+                    _log.InfoFormat("Deleted {0} test cases from {1}", deleted, ModelFile);
+                    model.Save();
                 }
-
-                foreach (var s in Releases)
-                {
-                    predicate = predicate.Or(x => x.Release == s);
-                }
-
-                foreach (var t in TestIds)
-                {
-
-                    predicate = predicate.Or(x => x.TestId == t);
-                }
-
-                var deleted = model.Delete(predicate.Compile());
-                Console.WriteLine("Deleted {0} test cases from {1}", deleted, ModelFile);
-                model.Save();
             }
 
             return 0;

@@ -5,6 +5,8 @@ using ManyConsole;
 using Mochify.Simile.Core.Models.Csv;
 using Mochify.Simile.Core.Utils;
 
+using Common.Logging;
+
 namespace Renderly.Commands
 {
     /// <summary>
@@ -17,6 +19,8 @@ namespace Renderly.Commands
     /// </summary>
     public class BatchAddTestCaseCommand : ConsoleCommand
     {
+        private static readonly ILog _log = LogManager.GetCurrentClassLogger();
+
         public string InputFile { get; set; }
         public string AppendTestFile { get; set; }
         public string OutputFile { get; set; }
@@ -31,16 +35,16 @@ namespace Renderly.Commands
 
         public override int Run(string[] remainingArguments)
         {
-            Console.WriteLine("You are generating tests from {0}", InputFile);
-            Console.WriteLine("You are writing out to {0}", OutputFile);
+            _log.InfoFormat("You are generating tests from {0}", InputFile);
+            _log.InfoFormat("You are writing out to {0}", OutputFile);
 
             if (string.IsNullOrWhiteSpace(AppendTestFile))
             {
-                Console.WriteLine("Not appending to anything.");
+                _log.Info("Not appending to anything because no append file specified.");
             }
             else
             {
-                Console.WriteLine("Appending to {0}.", AppendTestFile);
+                _log.InfoFormat("Appending to {0}.", AppendTestFile);
                 File.Copy(AppendTestFile, OutputFile);
             }
 
