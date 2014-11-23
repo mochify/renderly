@@ -90,7 +90,7 @@ namespace Renderly.Commands
 
             // Open the CSV file off disk and filter out anything based on
             // the command line arguments
-            var stream = new FileStream(DataSource, FileMode.Open, FileAccess.Read);
+            using (var stream = new FileStream(DataSource, FileMode.Open, FileAccess.Read))
             using (var model = new CsvModel(stream, fileManager))
             {
                 IEnumerable<TestCase> testCases;

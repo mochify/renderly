@@ -48,9 +48,9 @@ namespace Renderly.Commands
                 file = OutputFile;
             }
 
-            var csvStream = new FileStream(file, FileMode.Open, FileAccess.ReadWrite);
             var fileManager = new SimileNativeAssetManager();
 
+            using (var csvStream = new FileStream(file, FileMode.Open, FileAccess.ReadWrite))
             using (var model = new CsvModel(csvStream, fileManager))
             {
                 if (!Dates.Any() && !Releases.Any() && !TestIds.Any())

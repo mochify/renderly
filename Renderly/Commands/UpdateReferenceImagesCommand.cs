@@ -34,7 +34,7 @@ namespace Renderly.Commands
         public override int Run(string[] remainingArguments)
         {
             var fileManager = new SimileNativeAssetManager();
-            var fstream = new FileStream(ModelFile, FileMode.Open, FileAccess.Read);
+            using (var fstream = new FileStream(ModelFile, FileMode.Open, FileAccess.Read))
             using (var model = new CsvModel(fstream, fileManager))
             {
                 var predicate = PredicateBuilder.False<TestCase>();
