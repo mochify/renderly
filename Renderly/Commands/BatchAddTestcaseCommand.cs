@@ -47,14 +47,14 @@ namespace Renderly.Commands
                 _log.InfoFormat("Appending to {0}.", AppendTestFile);
                 File.Copy(AppendTestFile, OutputFile);
             }
-            
-            var csvStream = new FileStream(OutputFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            var shellFile = new FileStream(InputFile, FileMode.Open, FileAccess.ReadWrite);
-            var shellModel = new ShellTestCsvModel(shellFile);
+
             var fileManager = new SimileNativeAssetManager();
 
+            using (var csvStream = new FileStream(OutputFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (var shellFile = new FileStream(InputFile, FileMode.Open, FileAccess.ReadWrite))
             using (var model = new CsvModel(csvStream, fileManager))
             {
+                var shellModel = new ShellTestCsvModel(shellFile);
                 var generator = new TestCaseGenerator(fileManager);
                 model.AddTestCases(generator.GenerateTestCases(shellModel.GetTestCases()));
                 model.Save();
