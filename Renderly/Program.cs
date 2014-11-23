@@ -15,7 +15,6 @@ namespace Renderly
 {
     class Program
     {
-        private static readonly ILog _log = LogManager.GetCurrentClassLogger();
         private static ContainerBuilder RegisterAssemblyTypes()
         {
             // TODO do the IoC wiring here, which probably also means
@@ -41,7 +40,20 @@ namespace Renderly
             // wrap the object in a RuntimWrappedException
             // The assembly property to set to disable/enable would be:
             // [assembly:RuntimeCompatibilityAttribute(WrapNonExceptionThrows = false)];
-            _log.Info("Something unexpected happened! Please check for updates or file an issue on github", e.ExceptionObject as Exception);
+            ILog log = LogManager.GetCurrentClassLogger();
+            log.Fatal("Something unexpected happened! Please check for updates or file an issue on JIRA against Renderly");
+            
+            var ex = e.ExceptionObject as Exception;
+            log.Fatal(string.Format("Exception type: {0}", ex.GetType().ToString()));
+            log.Fatal(ex.Message);
+            log.Fatal(ex.StackTrace);
+
+            if (ex.InnerException != null)
+            {
+                log.Fatal("Inner Exception");
+                log.Fatal(ex.InnerException.Message);
+            }
+
             Environment.Exit(1);
         }
 

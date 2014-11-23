@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renderly", "Renderly\Renderly.csproj", "{6C023729-658D-466F-900E-AC9696D1C7A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4254FFE4-51D6-4240-9C1F-C70849EE85A1} = {4254FFE4-51D6-4240-9C1F-C70849EE85A1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simile.Core", "..\simile\Simile.Core\Simile.Core.csproj", "{4254FFE4-51D6-4240-9C1F-C70849EE85A1}"
 EndProject

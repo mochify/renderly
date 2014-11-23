@@ -47,8 +47,8 @@ namespace Renderly.Commands
                 _log.InfoFormat("Appending to {0}.", AppendTestFile);
                 File.Copy(AppendTestFile, OutputFile);
             }
-
-            var csvStream = new FileStream(OutputFile, FileMode.Create, FileAccess.ReadWrite);
+            
+            var csvStream = new FileStream(OutputFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             var shellFile = new FileStream(InputFile, FileMode.Open, FileAccess.ReadWrite);
             var shellModel = new ShellTestCsvModel(shellFile);
             var fileManager = new SimileNativeAssetManager();
