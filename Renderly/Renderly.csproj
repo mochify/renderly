@@ -46,7 +46,7 @@
       <HintPath>..\packages\ManyConsole.0.4.2.17\lib\ManyConsole.dll</HintPath>
     </Reference>
     <Reference Include="Mochify.Simile.Core">
-      <HintPath>..\..\simile\Simile.Core\bin\Debug\Mochify.Simile.Core.dll</HintPath>
+      <HintPath>..\packages\Simile.0.1.2\lib\Mochify.Simile.Core.dll</HintPath>
     </Reference>
     <Reference Include="NDesk.Options">
       <HintPath>..\packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
