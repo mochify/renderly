@@ -1,3 +1,5 @@
+## This project works as intended for its purpose and is currently unmaintained. :)
+
 # Renderly
 
 Renderly is a .NET library and library for automated comparison of images. It is intended for use in environments where you want to periodically check generated images against a reference image to see if any changes have caused the images to render differently or incorrectly.
